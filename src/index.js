@@ -1,12 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import PrivateRoute from './Components/PrivateRoute'
+import Authorization from './Components/Authorization';
+import Home from './Components/Home';
+import Login from './Components/Login';
+import Board from './Components/Board';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Switch>
+        <PrivateRoute exact path="/login" component={Login} />
+        <Authorization>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/board/:id" component={Board} />
+          </Switch>
+        </Authorization>
+      </Switch>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );
